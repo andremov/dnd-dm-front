@@ -1,0 +1,117 @@
+@import "variables";
+
+//.exit-btn-wrapper {
+//  width: 0;
+//  height: 0;
+//  z-index: 2;
+
+  .exit-btn {
+    position: absolute;
+    background-color: #d93619;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 5px;
+    font-size: 1.05em;
+    cursor: pointer;
+    //transform: translate(10px, 10px);
+      z-index: 2;
+  }
+//}
+
+.gem-socket {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin: 5px;
+
+  &.full-width {
+    > .gem-text {
+      width: calc(100% - 50px);
+      text-align: center !important;
+    }
+  }
+
+  &.shadow {
+    filter: drop-shadow(0px 6px 2px #00000050);
+  }
+
+  &.blend {
+    opacity: 0.5;
+  }
+
+  &.right {
+    flex-direction: row-reverse;
+
+    > .gem-text {
+      text-align: left;
+      transform: translateX(-30px);
+
+      > .back-drop {
+        padding: 5px 10px 5px 40px;
+        background: linear-gradient(270deg, #00000020 60%, #00000060 100%);
+      }
+    }
+  }
+
+  &.left {
+    > .gem-text {
+      text-align: right;
+      transform: translateX(30px);
+
+      > .back-drop {
+        padding: 5px 40px 5px 10px;
+        background: linear-gradient(90deg, #00000020 60%, #00000060 100%);
+      }
+    }
+  }
+
+  > .gem-text {
+    border-radius: 5px;
+    color: white;
+    font-size: 1.2em;
+    overflow: hidden;
+
+    > .back-drop {
+      width: inherit;
+      height: inherit;
+      //background-color: #00000050;
+    }
+  }
+
+  > svg {
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.load-container {
+  width: 75px;
+  height: 75px;
+
+  > .circle {
+    position: absolute;
+    margin: auto;
+    box-sizing: border-box;
+    width: inherit;
+    height: inherit;
+    border: 10px solid transparent;
+    border-bottom-color: $main-color;
+    border-radius: 50%;
+    animation: 2s rotate-load-circle infinite linear;
+  }
+}
+
+@keyframes rotate-load-circle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

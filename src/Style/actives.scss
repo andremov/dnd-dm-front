@@ -1,0 +1,118 @@
+@import "variables";
+
+button {
+  font-family: 'Roboto', sans-serif;
+  min-width: 180px;
+  height: 50px;
+  outline: none;
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transform: scale(0.95);
+  transition: 0.2s;
+  font-size: 1.5em;
+  font-weight: bold;
+  border: 2px solid transparent;
+
+  &:disabled {
+    background: gray !important;
+    color: gray !important;
+  }
+
+  &:hover {
+    transform: scale(1);
+  }
+
+  &.primary {
+    background: linear-gradient(30deg, $main-color-light, $main-color-dark);
+    color: white;
+  }
+
+  &.secondary {
+    font-weight: normal;
+    border-color: #c1c1c1;
+    background-color: white;
+    color: black;
+  }
+
+  &.small {
+    font-size: 1.25em;
+    font-weight: normal;
+    min-width: 140px;
+    height: 40px;
+  }
+
+  &.success {
+    background: $success-color;
+    color: white;
+    border-color: transparent;
+  }
+
+  &.failure {
+    background: $failure-color;
+  }
+
+  &.pending {
+    background: $pending-color;
+    color: white;
+    border-color: transparent;
+  }
+}
+
+input, select, textarea {
+  height: 45px;
+  min-width: 200px;
+  width: 100%;
+  padding: 5px 5px 5px 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  outline: 0;
+  border: 1.5px solid transparent;
+  background-color: #ddd;
+  transition: 0.2s;
+  font-size: 1.05em;
+  margin: 2px;
+
+  &:focus {
+    border-color: $main-color;
+  }
+
+  &.short {
+    min-width: 50px;
+    width: 50px;
+    height: 40px;
+    padding: 0 0 0 5px;
+  }
+}
+
+input[type='range'] {
+  padding: 0;
+  height: 30px;
+  min-width: 300px;
+}
+
+.range-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-evenly;
+  margin: 2px;
+
+  > input, > select {
+    margin: 0;
+
+    &:nth-child(1) {
+      margin-right: 2px;
+    }
+
+    &:nth-child(2) {
+      margin-left: 2px;
+    }
+  }
+}

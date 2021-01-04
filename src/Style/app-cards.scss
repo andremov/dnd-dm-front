@@ -1,0 +1,388 @@
+@import "variables";
+
+.main-panel {
+  height: calc(100vh - 70px);
+  width: 35%;
+  min-width: 30%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.card-holder-panel {
+  width: 65%;
+  height: calc(100vh - 70px);
+
+  > .board {
+    min-width: 100%;
+    min-height: 100%;
+    overflow-x: scroll;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.app-card {
+  position: relative;
+  padding: 10px;
+  //background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px 2px #00000077;
+  //box-sizing: border-box;
+  width: fit-content;
+  transition: 0.25s;
+  overflow: hidden;
+  margin: 10px;
+  background: radial-gradient(circle at 0% 100%, #a7a7a7 0%, #ffffff 30%);
+}
+
+.app-card-contents {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  > * {
+    width: 100%;
+  }
+
+  > h1 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+    height: 50px;
+    max-height: 50px;
+    width: fit-content;
+    align-self: center;
+  }
+
+  > .gem-socket {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+.dims_hidden {
+  width: 0;
+  height: 0;
+}
+
+.hidden {
+  @extend .dims_hidden;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+.enter {
+  width: 400px;
+  height: 300px;
+}
+
+.dims_loading {
+  width: 100px;
+  height: 100px;
+  min-width: 100px;
+  min-height: 100px;
+}
+
+.loading {
+  @extend .dims_loading;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.new-player {
+  width: 100%;
+  height: 500px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.dims_race_info {
+  width: 250px;
+  height: 400px;
+  min-width: 250px;
+  min-height: 400px;
+}
+
+.race_info {
+  @extend .app-card-contents;
+  @extend .dims_race_info;
+
+  > .trait-section {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    > h2 {
+      text-align: center;
+      font-weight: normal;
+    }
+  }
+
+  > .info-section {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.dims_class_info {
+  width: 300px;
+  height: 350px;
+  min-width: 300px;
+  min-height: 350px;
+}
+
+.class_info {
+  @extend .app-card-contents;
+  @extend .dims_class_info;
+
+  > .info-section {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  > .equip-section {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .invalid {
+    color: $failure-color;
+    text-decoration: line-through;
+  }
+}
+
+.dims_alignment_info {
+  width: 300px;
+  height: 350px;
+  min-width: 300px;
+  min-height: 350px;
+}
+
+.alignment_info {
+  @extend .app-card-contents;
+  @extend .dims_alignment_info;
+}
+
+.enter-form > .section {
+  > .ability-roll {
+    > .rolls-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+  }
+
+  > .ability-entry {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > span {
+      font-size: 1.4em;
+    }
+  }
+
+  > .ability-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  > textarea {
+    width: 90%;
+    height: 300px;
+    resize: none;
+  }
+}
+
+.dims_ability_info {
+  width: 300px;
+  height: 250px;
+  min-width: 300px;
+  min-height: 250px;
+}
+
+.ability_info {
+  @extend .app-card-contents;
+  @extend .dims_ability_info;
+}
+
+.char-info {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+
+  h2 {
+    margin-top: 20px;
+  }
+
+  .one-gem {
+    display: flex;
+    justify-content: center;
+
+    > * {
+      justify-content: center;
+    }
+  }
+
+  .two-gems {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+.dims_roll_info {
+  width: 400px;
+  height: 250px;
+  min-width: 400px;
+  min-height: 250px;
+}
+
+.roll_info {
+  @extend .app-card-contents;
+  @extend .dims_roll_info;
+
+  > .roll-guide {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+
+    > .roll-guide-item {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      flex: 1;
+
+      > .item-text {
+        font-size: 1.1em;
+        font-weight: bold;
+      }
+
+      > .item-label {
+        font-size: 0.75em;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.dims_notes {
+  width: 400px;
+  height: 550px;
+  min-width: 400px;
+  min-height: 550px;
+}
+
+.notes {
+  @extend .app-card-contents;
+  @extend .dims_notes;
+
+  > textarea {
+    resize: none;
+    width: 100%;
+    height: 400px;
+    margin-bottom: 20px;
+  }
+
+  > button {
+    width: 300px;
+    align-self: center;
+  }
+}
+
+.dims_inventory {
+  width: 400px;
+  height: 600px;
+  min-width: 400px;
+  min-height: 600px;
+}
+
+.inventory {
+  @extend .app-card-contents;
+  @extend .dims_inventory;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 100%;
+
+    > .item {
+      display: flex;
+      flex-direction: column;
+      height: 80px;
+      min-height: 80px;
+      border-radius: 10px;
+      border: 1px solid;
+      overflow: hidden;
+      margin-bottom: 5px;
+
+      > div {
+        padding: 7px;
+        box-sizing: border-box;
+      }
+
+      > :first-child {
+        display: flex;
+        justify-content: space-between;
+        background-color: #476b85;
+        color: white;
+      }
+    }
+  }
+}
+
+.dims_bkg {
+  width: 400px;
+  height: 500px;
+  min-width: 400px;
+  min-height: 500px;
+}
+
+.background {
+  @extend .app-card-contents;
+  @extend .dims_bkg;
+
+}
+
+.dims_spells {
+  @extend .dims_inventory;
+}
+
+.spells {
+  @extend .app-card-contents;
+  @extend .dims_spells;
+  @extend .inventory;
+}
+
+
+.dims_class_quest {
+  width: 400px;
+  height: 250px;
+  min-width: 400px;
+  min-height: 250px;
+}
+
+.class_quest {
+  @extend .app-card-contents;
+  @extend .dims_class_quest;
+}
+
+
