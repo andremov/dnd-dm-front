@@ -1,35 +1,23 @@
 import React, { Component, Fragment } from 'react';
 import { Panel } from "./Components/Panel";
-import { fetchAllPlayerData, fetchOtherPlayers } from "./Services/api";
+import { fetchAllData } from "./Services/api";
 
 export class App extends Component {
     
     state = {
-        player_id : '',
-        player_data : undefined,
-        player_items : [],
-        player_spells : [],
-        player_notes : [],
-        player_quests : [],
-        other_players : [],
+        player_data : []
     }
     
-    setPlayerID = ( player_id ) => {
-        this.setState({
-            player_id
-        })
-        fetchOtherPlayers().then(r => {
-            this.setState({
-                other_players : r
-            })
-        })
+    componentDidMount() {
         this.updatePlayerData();
         setInterval(this.updatePlayerData, 5000)
     }
     
     updatePlayerData = () => {
-        fetchAllPlayerData(this.state.player_id).then(r => {
-            this.setState(r)
+        fetchAllData().then(player_data => {
+            this.setState({
+                player_data
+            })
         })
     }
     
@@ -45,9 +33,8 @@ export class App extends Component {
         })
     }
     
-    
     render() {
-        const { player_id, player_data, player_items, player_spells, player_notes, player_quests, other_players } = this.state;
+        const { player_data } = this.state;
         const panels = [ 1, 2, 3 ];
         return <Fragment>
             {
@@ -56,15 +43,8 @@ export class App extends Component {
                         id={item}
                         key={item}
                         
-                        player_id={player_id}
                         player_data={player_data}
-                        player_inventory={player_items}
-                        player_spells={player_spells}
-                        player_notes={player_notes}
-                        player_quests={player_quests}
-                        other_players={other_players}
                         
-                        setPlayerData={this.setPlayerID}
                         setPlayerNotes={this.setNotes}
                         setPlayerInventory={this.setInventory}
                     />

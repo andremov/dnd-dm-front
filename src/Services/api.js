@@ -56,3 +56,10 @@ export function doTrade( trade_data ) {
         return r.data;
     })
 }
+
+
+export function fetchAllData() {
+    return API.get('/players/omega/').then(r => {
+        return r.data;
+    })
+}

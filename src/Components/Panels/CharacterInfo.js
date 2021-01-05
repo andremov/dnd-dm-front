@@ -6,14 +6,6 @@ import { Loading } from "../Loading";
 
 export function CharacterInfo( { player_id, player_data, setPlayerData } ) {
     
-    if (!player_id) {
-        return <EnterForm setPlayerData={setPlayerData} />
-    }
-    
-    if (!player_data) {
-        return <Loading />
-    }
-    
     return (
         <div className={'char-info'}>
             

@@ -652,15 +652,7 @@ const panels = [
 ]
 
 export function getPanels( parent_id, playerExists ) {
-    if ( playerExists ) {
-        return panels
-    }
-    
-    if ( parent_id === 1 ) {
-        return panels.filter(item => item.id === 3)
-    }
-    
-    return panels.filter(item => item.name.includes('Wiki'))
+    return panels
 }
 
 export function getPanel( panel_id, props ) {
