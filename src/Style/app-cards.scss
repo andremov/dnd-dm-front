@@ -1,47 +1,30 @@
 @import "variables";
 
-.main-panel {
-  height: calc(100vh - 70px);
-  width: 35%;
-  min-width: 30%;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-x: hidden;
-}
 
-.card-holder-panel {
-  width: 65%;
-  height: calc(100vh - 70px);
-
-  > .board {
-    min-width: 100%;
-    min-height: 100%;
-    overflow-x: scroll;
-    display: flex;
-    align-items: center;
-  }
-}
-
-.app-card {
-  position: relative;
-  padding: 10px;
-  //background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 5px 2px #00000077;
-  //box-sizing: border-box;
-  width: fit-content;
-  transition: 0.25s;
-  overflow: hidden;
-  margin: 10px;
-  background: radial-gradient(circle at 0% 100%, #a7a7a7 0%, #ffffff 30%);
-}
-
-.app-card-contents {
+.item-card {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   position: relative;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0 1px 1px #00000050;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  transition: 0.2s;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 100%;
+
+  &.closed {
+    min-height: 53px;
+    height: 53px;
+
+    .gem-socket {
+      display: none;
+    }
+  }
 
   > * {
     width: 100%;
@@ -60,57 +43,65 @@
   > .gem-socket {
     position: absolute;
     bottom: 0;
+    right: 10px;
+  }
+
+}
+
+.spell-card, .inventory-item-card, .trade-item-card {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(var(--itemDataHeight) + 35px);
+  font-size: 16px;
+  line-height: 1.4;
+  border-radius: 10px;
+  border: 1px solid;
+  overflow: hidden;
+  margin-bottom: 5px;
+  width: 100%;
+
+  > div {
+    padding: 7px;
+    box-sizing: border-box;
+  }
+
+  > :first-child {
+    display: flex;
+    justify-content: space-between;
+    background-color: $main-color-dark;
+    color: white;
+  }
+
+  > :nth-child(2) {
+    font-family: monospace;
+  }
+
+  > :nth-child(3) {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 60px;
+
+    > button {
+      width: 50px;
+      min-width: 50px;
+    }
+
+    > span {
+      font-size: 1.5em;
+    }
   }
 }
 
-.dims_hidden {
-  width: 0;
-  height: 0;
+.trade-item-card {
+  min-height: calc(var(--itemDataHeight) + 95px);
 }
 
-.hidden {
-  @extend .dims_hidden;
-  box-shadow: none;
-  padding: 0;
-  margin: 0;
-}
+.race-card {
+  @extend .item-card;
 
-.enter {
-  width: 400px;
   height: 300px;
-}
-
-.dims_loading {
-  width: 100px;
-  height: 100px;
-  min-width: 100px;
-  min-height: 100px;
-}
-
-.loading {
-  @extend .dims_loading;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.new-player {
-  width: 100%;
-  height: 500px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.dims_race_info {
-  width: 250px;
-  height: 400px;
-  min-width: 250px;
-  min-height: 400px;
-}
-
-.race_info {
-  @extend .app-card-contents;
-  @extend .dims_race_info;
+  min-height: 300px;
 
   > .trait-section {
     border-top: 1px solid gray;
@@ -134,16 +125,11 @@
   }
 }
 
-.dims_class_info {
-  width: 300px;
-  height: 350px;
-  min-width: 300px;
-  min-height: 350px;
-}
+.class-card {
+  @extend .item-card;
 
-.class_info {
-  @extend .app-card-contents;
-  @extend .dims_class_info;
+  min-height: 300px;
+  height: 300px;
 
   > .info-section {
     border-top: 1px solid gray;
@@ -163,226 +149,70 @@
   }
 }
 
-.dims_alignment_info {
-  width: 300px;
-  height: 350px;
-  min-width: 300px;
-  min-height: 350px;
+.alignment-card {
+  @extend .item-card;
+  height: 220px;
+  min-height: 220px;
 }
 
-.alignment_info {
-  @extend .app-card-contents;
-  @extend .dims_alignment_info;
-}
+.note-card {
+  @extend .item-card;
+  min-height: calc(var(--textAreaHeight) + 130px);
+  height: calc(var(--textAreaHeight) + 130px);
 
-.enter-form > .section {
-  > .ability-roll {
-    > .rolls-display {
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      font-size: 1.5em;
-      margin-bottom: 10px;
-    }
-  }
-
-  > .ability-entry {
+  h1 {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    > span {
-      font-size: 1.4em;
-    }
-  }
-
-  > .ability-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+    font-weight: normal;
+    text-align: left;
   }
 
   > textarea {
-    width: 90%;
-    height: 300px;
     resize: none;
-  }
-}
-
-.dims_ability_info {
-  width: 300px;
-  height: 250px;
-  min-width: 300px;
-  min-height: 250px;
-}
-
-.ability_info {
-  @extend .app-card-contents;
-  @extend .dims_ability_info;
-}
-
-.char-info {
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-
-  h2 {
-    margin-top: 20px;
-  }
-
-  .one-gem {
-    display: flex;
-    justify-content: center;
-
-    > * {
-      justify-content: center;
-    }
-  }
-
-  .two-gems {
-    display: flex;
-    justify-content: space-evenly;
-  }
-}
-
-.dims_roll_info {
-  width: 400px;
-  height: 250px;
-  min-width: 400px;
-  min-height: 250px;
-}
-
-.roll_info {
-  @extend .app-card-contents;
-  @extend .dims_roll_info;
-
-  > .roll-guide {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-evenly;
-
-    > .roll-guide-item {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      flex: 1;
-
-      > .item-text {
-        font-size: 1.1em;
-        font-weight: bold;
-      }
-
-      > .item-label {
-        font-size: 0.75em;
-        text-align: center;
-      }
-    }
-  }
-}
-
-.dims_notes {
-  width: 400px;
-  height: 550px;
-  min-width: 400px;
-  min-height: 550px;
-}
-
-.notes {
-  @extend .app-card-contents;
-  @extend .dims_notes;
-
-  > textarea {
-    resize: none;
-    width: 100%;
-    height: 400px;
-    margin-bottom: 20px;
+    max-width: 100%;
+    min-height: var(--textAreaHeight);
+    overflow: hidden;
+    line-height: 1.4;
   }
 
   > button {
-    width: 300px;
+    width: 200px;
     align-self: center;
   }
 }
 
-.dims_inventory {
-  width: 400px;
-  height: 600px;
-  min-width: 400px;
-  min-height: 600px;
+.new-note-card {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  display: flex;
+  border-radius: 5px;
+  background-color: $main-color-dark;
 }
 
-.inventory {
-  @extend .app-card-contents;
-  @extend .dims_inventory;
+.ability-card {
+  @extend .item-card;
+  height: 200px;
+  min-height: 200px;
+}
 
+.quest-card {
+  @extend .item-card;
+  min-height: calc(var(--textAreaHeight) + 160px);
+  height: calc(var(--textAreaHeight) + 160px);
+
+  h1 {
+    width: 100%;
+    font-weight: normal;
+    text-align: left;
+  }
+  h2 {
+    margin-bottom: 10px;
+  }
   > div {
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    height: 100%;
-
-    > .item {
-      display: flex;
-      flex-direction: column;
-      height: 80px;
-      min-height: 80px;
-      border-radius: 10px;
-      border: 1px solid;
-      overflow: hidden;
-      margin-bottom: 5px;
-
-      > div {
-        padding: 7px;
-        box-sizing: border-box;
-      }
-
-      > :first-child {
-        display: flex;
-        justify-content: space-between;
-        background-color: #476b85;
-        color: white;
-      }
-    }
+    min-height: calc(var(--itemDataHeight));
+    height: calc(var(--itemDataHeight));
+    white-space: pre-wrap;
+    font-size: 16px;
+    font-family: monospace;
   }
 }
-
-.dims_bkg {
-  width: 400px;
-  height: 500px;
-  min-width: 400px;
-  min-height: 500px;
-}
-
-.background {
-  @extend .app-card-contents;
-  @extend .dims_bkg;
-
-}
-
-.dims_spells {
-  @extend .dims_inventory;
-}
-
-.spells {
-  @extend .app-card-contents;
-  @extend .dims_spells;
-  @extend .inventory;
-}
-
-
-.dims_class_quest {
-  width: 400px;
-  height: 250px;
-  min-width: 400px;
-  min-height: 250px;
-}
-
-.class_quest {
-  @extend .app-card-contents;
-  @extend .dims_class_quest;
-}
-
-

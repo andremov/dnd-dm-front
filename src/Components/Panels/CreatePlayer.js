@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { abilities, alignments, classes, races } from "../../Utils/Data";
-import { RollDie } from "../../Utils/Functions";
-import { sendCharacter } from "../../Services/api";
+import { RollDie, validCharacter } from "../../Utils/Functions";
+import { createCharacter } from "../../Services/api";
 
 export class CreatePlayer extends Component {
     
@@ -94,54 +94,26 @@ export class CreatePlayer extends Component {
         }
     }
     
-    validSection1 = () => {
-        let { formData } = this.state;
-        
-        return (
-            !!formData.name &&
-            !!formData.codename &&
-            formData.alignment !== -1 &&
-            formData.race !== -1 &&
-            formData.char_class !== -1 &&
-            formData.age <= races[formData.race].age.max &&
-            formData.age >= races[formData.race].age.min &&
-            formData.height <= races[formData.race].height.max &&
-            formData.height >= races[formData.race].height.min
-        )
-    }
-    validSection2 = () => {
-        let { formData } = this.state;
-        
-        return (
-            !!formData.stats[0] &&
-            !!formData.stats[1] &&
-            !!formData.stats[2] &&
-            !!formData.stats[3] &&
-            !!formData.stats[4] &&
-            !!formData.stats[5]
-        )
-    }
-    
-    validSend = () => {
-        let { formData } = this.state;
-        
-        return (
-            !!formData.background
-        )
+    validateSection = ( section_id ) => {
+        switch ( section_id ) {
+            case 1:
+                return validSection1(this.state.formData)
+            case 2:
+                return validSection2(this.state.formData)
+            case 3:
+                return validSection3(this.state.formData)
+            default:
+                return validSection1(this.state.formData)
+                    && validSection2(this.state.formData)
+                    && validSection3(this.state.formData);
+        }
     }
     
     doSend = () => {
-        sendCharacter(this.state.formData).then(r => {
+        createCharacter(this.state.formData).then(r => {
             console.log(r.message)
+            this.props.endCallback()
         })
-        
-        this.props.eventCallback({ action : 'go_to_destination' })
-        setTimeout(() => {
-            this.props.eventCallback({ action : 'change_destination', data : { destination : 'enter' } })
-            setTimeout(() => {
-                this.props.eventCallback({ action : 'go_to_destination' })
-            }, 1000)
-        }, 1000)
     }
     
     assignRoll = ( id ) => {
@@ -186,50 +158,47 @@ export class CreatePlayer extends Component {
     }
     
     render = () => {
-        let { formData, section, rollData, swapStats, rolledStats } = this.state;
+        let { formData, rollData, swapStats, rolledStats } = this.state;
         
-        return <div className={'new-player'}>
-            <form className={'enter-form'} onSubmit={e => {
+        return <form
+            className={'create-form'}
+            onSubmit={e => {
                 e.preventDefault()
-            }}>
-                <BasicSection
-                    section={section}
-                    formData={formData}
-                    handleChange={this.handleChange}
-                    validSection={this.validSection1}
-                    setState={( data ) => this.setState(data)}
-                />
-                <div className={'color-bar'} />
-                <AbilitySection
-                    section={section}
-                    formData={formData}
-                    swapStats={swapStats}
-                    validSection={this.validSection2}
-                    rolledStats={rolledStats}
-                    rollData={rollData}
-                    rollAbility={this.rollAbility}
-                    assignRoll={this.assignRoll}
-                    trySwap={this.trySwap}
-                    setState={( data ) => this.setState(data)}
-                />
-                <div className={'color-bar'} />
-                <BackgroundSection
-                    section={section}
-                    formData={formData}
-                    handleChange={this.handleChange}
-                    validSend={this.validSend}
-                    doSend={this.doSend}
-                    setState={( data ) => this.setState(data)}
-                />
-            </form>
-        </div>
+            }}
+        >
+            
+            <BasicSection
+                formData={formData}
+                handleChange={this.handleChange}
+            />
+            <div className={'color-bar'} />
+            <AbilitySection
+                formData={formData}
+                swapStats={swapStats}
+                rolledStats={rolledStats}
+                rollData={rollData}
+                rollAbility={this.rollAbility}
+                assignRoll={this.assignRoll}
+                trySwap={this.trySwap}
+            />
+            <div className={'color-bar'} />
+            <BackgroundSection
+                formData={formData}
+                handleChange={this.handleChange}
+                validateSection={this.validateSection}
+                doSend={this.doSend}
+            />
+        </form>
     }
 }
 
 function BasicSection( props ) {
-    const { section, formData, handleChange, validSection, setState } = props;
+    const { formData, handleChange } = props;
     
-    return <div className={'section' + (section === 0 ? '' : ' hidden')}>
+    return <div className={'section'}>
+        <h1>
+            Character Information
+        </h1>
         <input
             placeholder={'Codename'}
             name={'codename'}
@@ -344,26 +313,14 @@ function BasicSection( props ) {
                 onChange={handleChange}
             />
         </div>
-        
-        <button
-            className={'primary'}
-            children={'Next'}
-            disabled={!validSection()}
-            onClick={() => {
-                if ( validSection() ) {
-                    setState({
-                        section : 1
-                    })
-                }
-            }}
-        />
+    
     </div>
 }
 
 function AbilitySection( props ) {
-    const { section, swapStats, validSection, formData, rolledStats, rollData, rollAbility, assignRoll, trySwap,  setState } = props;
+    const { swapStats, formData, rolledStats, rollData, rollAbility, assignRoll, trySwap } = props;
     
-    return <div className={'section' + (section === 1 ? '' : ' hidden')}>
+    return <div className={'section'}>
         <h1>
             Abilities
         </h1>
@@ -407,76 +364,69 @@ function AbilitySection( props ) {
                 </button>
             })}
         </div>
-        
-        <div className={'input-group'}>
-            <button
-                className={'secondary'}
-                children={'Back'}
-                onClick={() =>
-                    setState({
-                        section : 0
-                    })}
-            />
-            <button
-                className={'primary'}
-                children={'Next'}
-                disabled={!validSection()}
-                onClick={() => {
-                    if ( validSection() ) {
-                        setState({
-                            section : 2
-                        })
-                    }
-                }}
-            />
-        </div>
+    
     </div>
 }
 
 function BackgroundSection( props ) {
-    const { section, formData, handleChange, setState, validSend, doSend } = props;
+    const { formData, handleChange, validateSection, doSend } = props;
     
-    function validCharacter(text) {
-        let re = new RegExp('[a-zA-Z0-9.,!?¡¿ ñ\n\r]*');
-        let p = text;
-        let m = p.match(re);
-        return (m[0].length === p.length);
-    }
-    
-    function validateChange(e) {
-        if (validCharacter(e.target.value)) {
+    function validateChange( e ) {
+        if ( validCharacter(e.target.value) ) {
             handleChange(e)
         }
     }
     
-    return <div className={'section' + (section === 2 ? '' : ' hidden')}>
+    return <div className={'section'}>
+        <h1>
+            Character Backstory
+        </h1>
         <textarea
             placeholder={'Background'}
             name={'background'}
             value={formData.background}
             onChange={validateChange}
         />
-    
+        
         <div className={'input-group'}>
-            <button
-                className={'secondary'}
-                children={'Back'}
-                onClick={() =>
-                    setState({
-                        section : 1
-                    })}
-            />
             <button
                 className={'primary'}
                 children={'Create'}
-                disabled={!validSend()}
-                onClick={() => {
-                    if ( validSend() ) {
-                        doSend()
-                    }
-                }}
+                disabled={!validateSection()}
+                onClick={doSend}
             />
         </div>
-        
+    
     </div>
+}
+
+function validSection1( formData ) {
+    return (
+        !!formData.name &&
+        !!formData.codename &&
+        formData.alignment !== -1 &&
+        formData.race !== -1 &&
+        formData.char_class !== -1 &&
+        formData.age <= races[formData.race].age.max &&
+        formData.age >= races[formData.race].age.min &&
+        formData.height <= races[formData.race].height.max &&
+        formData.height >= races[formData.race].height.min
+    )
+}
+
+function validSection2( formData ) {
+    return (
+        !!formData.stats[0] &&
+        !!formData.stats[1] &&
+        !!formData.stats[2] &&
+        !!formData.stats[3] &&
+        !!formData.stats[4] &&
+        !!formData.stats[5]
+    )
+}
+
+function validSection3( formData ) {
+    return (
+        !!formData.background
+    )
 }

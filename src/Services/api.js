@@ -8,11 +8,11 @@ export const API = axios.create({
     responseType : 'json',
 });
 
-export function sendCharacter( object ) {
+export function createCharacter( object ) {
     return API.post('/players/', {
         ...object,
         stats : JSON.stringify(object.stats),
-        level: 1,
+        level : 1,
         hit_points : classes[object.char_class].hit_dice,
         max_hit_points : classes[object.char_class].hit_dice
     }).then(r => {
@@ -20,27 +20,39 @@ export function sendCharacter( object ) {
     })
 }
 
-export function findCharacter( codename ) {
+export function fetchCharacterID( codename ) {
     return API.get('/players/find', { params : { codename } }).then(r => {
-        r.data.stats = JSON.parse(r.data.stats)
         return r.data;
     })
 }
 
-export function fetchInventory( id ) {
-    return API.get('/items/find', { params : { id } }).then(r => {
+export function fetchAllPlayerData( id ) {
+    return API.get('/players/all-data/' + id).then(r => {
+        r.data.player_data.stats = JSON.parse(r.data.player_data.stats)
         return r.data;
     })
 }
 
-export function fetchSpells( id ) {
-    return API.get('/spells/find', { params : { id } }).then(r => {
+export function createNote( data ) {
+    return API.post('/notes/', data).then(r => {
         return r.data;
     })
 }
 
-export function modifyCharacter(player_id, changes) {
-    return API.patch('/players/'+player_id, changes).then(r => {
+export function modifyNote( id, data ) {
+    return API.patch('/notes/' + id, data).then(r => {
+        return r.data;
+    })
+}
+
+export function fetchOtherPlayers() {
+    return API.get('/players/others/').then(r => {
+        return r.data;
+    })
+}
+
+export function doTrade( trade_data ) {
+    return API.post('/items/trade', trade_data).then(r => {
         return r.data;
     })
 }

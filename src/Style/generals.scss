@@ -1,14 +1,5 @@
 @import "variables";
 
-#root {
-  max-width: 100vw;
-  min-height: calc(100vh - 70px);
-  padding-top: 70px;
-  height: fit-content;
-  background-color: #476b85;
-  display: flex;
-}
-
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -16,102 +7,69 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  max-width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+#root > .panel {
+  background-color: white;
+  border-right: 1px solid gray;
+  flex: 1;
+  min-width: 500px;
+
+  &:last-child {
+    border: none;
+  }
+
+  > .panel-header {
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    height: 70px;
+    background-color: $main-color-dark;
+  }
+
+  > .panel-contents {
+    width: 100%;
+    padding: 20px;
+    height: calc(100% - 70px);
+    box-sizing: border-box;
+    transition: 0.2s;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+    //align-items: center;
+    //justify-content: center;
+  }
+}
+
 h1, h2 {
   margin: 0;
 }
 
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 70px;
-
-  font-size: 1.5em;
-
-  color: black;
-  background-color: white;
-
-  display: flex;
-  justify-content: space-evenly;
-
-  > .header-item {
-    cursor: pointer;
-    height: inherit;
-    transition: 0.2s;
-    width: 300px;
-    margin-right: 10px;
-    margin-left: 10px;
-
-    > .item-name {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: inherit;
-      border-bottom: 2px solid $main-color;
-      background-color: white;
-      position: relative;
-      z-index: 10;
-
-      &.open {
-        border-bottom: 5px solid $main-color;
-      }
-
-      &:hover {
-        background-color: #d9d9d9;
-      }
-    }
-
-    > .dropdown-list {
-      margin: 0;
-      background-color: white;
-      list-style-type: none;
-      padding-top: 5px;
-      padding-left: 0;
-      position: relative;
-      z-index: 9;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      overflow: hidden;
-      transition: 0.2s;
-      border: 2px solid $main-color;
-      transform: translateY(-101%);
-
-      &.open {
-        transform: translateY(0%);
-      }
-
-      > .dropdown-item {
-        padding: 5px 5px 5px 10px;
-        box-sizing: border-box;
-        cursor: pointer;
-        border-bottom: 1px solid gray;
-
-        &:hover {
-          background-color: #00000020;
-        }
-
-        &:last-child {
-          border: 0;
-        }
-      }
-    }
-  }
-}
-
 form {
-  height: 100%;
+
+  &.enter-form {
+    height: 300px;
+    width: 50%;
+  }
+
   width: 100%;
+  //height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  margin: auto;
 
   > .color-bar {
     height: 10px;
-    width: 150%;
-    margin-top: 10px;
+    width: calc(100% + 40px);
+    margin-top: 30px;
+    margin-bottom: 30px;
     background: linear-gradient(30deg, $main-color, $main-color-dark);
   }
 
@@ -122,11 +80,68 @@ form {
     align-items: center;
     overflow: hidden;
     transition: 0.3s;
-    height: 100%;
     width: 100%;
+
+    > h1 {
+      margin-bottom: 15px;
+    }
+
+    > .ability-roll {
+      margin-bottom: 20px;
+
+      > .rolls-display {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+    }
+
+    > .ability-entry {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      > span {
+        font-size: 1.4em;
+      }
+    }
+
+    > .ability-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    > textarea {
+      width: 90%;
+      height: 300px;
+      resize: none;
+    }
 
     &.hidden {
       height: 0;
     }
+  }
+}
+
+@media screen and (max-width: 1499px) {
+  #root > .panel:nth-child(3) {
+    display: none;
+  }
+  #root > .panel:nth-child(2) {
+    border: none;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  #root > .panel:nth-child(2) {
+    display: none;
+  }
+  #root > .panel:nth-child(1) {
+    border: none;
   }
 }

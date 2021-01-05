@@ -1,8 +1,18 @@
 import React from 'react';
 import { abilities, alignments, classes, races } from "../../Utils/Data";
 import { Gem } from "../Gem";
+import { EnterForm } from "./EnterForm";
+import { Loading } from "../Loading";
 
-export function CharacterInfo( { player_data } ) {
+export function CharacterInfo( { player_id, player_data, setPlayerData } ) {
+    
+    if (!player_id) {
+        return <EnterForm setPlayerData={setPlayerData} />
+    }
+    
+    if (!player_data) {
+        return <Loading />
+    }
     
     return (
         <div className={'char-info'}>

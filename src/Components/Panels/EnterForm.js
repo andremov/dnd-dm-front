@@ -1,44 +1,41 @@
 import React, { useState } from "react";
-import { findCharacter } from "../../Services/api";
+import { fetchCharacterID } from "../../Services/api";
+import { CreatePlayer } from "./CreatePlayer";
 
-export function EnterForm( { setPlayerData, eventCallback } ) {
-    const [ codename, setCodename ] = useState('');
+export function EnterForm( { setPlayerData } ) {
+    const [ codename, setCodename ] = useState('test_new_ui');
+    const [ creatingPlayer, setCreatingPlayer ] = useState(false)
+    
+    if ( creatingPlayer ) {
+        return <CreatePlayer endCallback={() => setCreatingPlayer(false)} />
+    }
     
     function requestPlayer() {
-        findCharacter(codename).then(r => {
-            setPlayerData(r)
-            eventCallback({ action : 'go_to_destination' })
-            setTimeout(() => {
-                eventCallback({ action : 'change_destination', data : { destination : 'character' } })
-                setTimeout(() => {
-                    eventCallback({ action : 'go_to_destination' })
-                }, 1000)
-            }, 1000)
+        fetchCharacterID(codename).then(r => {
+            setPlayerData(r._id)
         })
     }
     
-    return <div className={'enter'}>
-        <form className={'enter-form'} onSubmit={e => {
+    return <form
+        className={'enter-form'}
+        onSubmit={e => {
             e.preventDefault()
-        }}>
-            <input
-                placeholder={'Codename'}
-                value={codename}
-                onChange={e => setCodename(e.target.value)}
-            />
-            <button
-                className={'primary'}
-                children={'Enter'}
-                onClick={requestPlayer}
-            />
-            <button
-                className={'secondary small'}
-                children={'Create'}
-                onClick={() => {
-                    eventCallback({ action : 'modify', data : { name : 'loading', destination : 'new_player' } })
-                    setTimeout(() => eventCallback({ action : 'go_to_destination' }), 1000)
-                }}
-            />
-        </form>
-    </div>
+        }}
+    >
+        <input
+            placeholder={'Codename'}
+            value={codename}
+            onChange={e => setCodename(e.target.value)}
+        />
+        <button
+            className={'primary'}
+            children={'Enter'}
+            onClick={requestPlayer}
+        />
+        <button
+            className={'secondary small'}
+            children={'Create'}
+            onClick={() => setCreatingPlayer(true)}
+        />
+    </form>
 }

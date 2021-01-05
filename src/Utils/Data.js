@@ -1,268 +1,48 @@
-import React, { Fragment } from "react";
-import { AlignmentInfo } from "../Components/Cards/AlignmentInfo";
-import { ClassInfo } from "../Components/Cards/ClassInfo";
-import { RaceInfo } from "../Components/Cards/RaceInfo";
-import { CreatePlayer } from "../Components/Panels/CreatePlayer";
-import { EnterForm } from "../Components/Panels/EnterForm";
-import { Loading } from "../Components/Loading";
-import { ExitButton } from "../Components/ExitButton";
-import { AppCard } from "../Components/AppCard";
-import { AbilityInfo } from "../Components/Cards/AbilityInfo";
+import React from "react";
 import { CharacterInfo } from "../Components/Panels/CharacterInfo";
-import { RollInfo } from "../Components/Cards/RollInfo";
-import { Notes } from "../Components/Cards/Notes";
-import { Inventory } from "../Components/Cards/Inventory";
-import { Background } from "../Components/Cards/Background";
-import { Spellbook } from "../Components/Cards/Spellbook";
-import { ClassQuest } from "../Components/Cards/ClassQuest";
-
-export const card_states = {
-    hidden : {
-        component : ( props ) => {
-            return <Fragment />
-        },
-        card :
-            ( props ) => {
-                return <AppCard
-                    {...props}
-                    showExitBtn={false}
-                    className={'dims_hidden'}
-                >
-                    {card_states['hidden'].component(props)}
-                </AppCard>
-            }
-    },
-    loading : {
-        component : ( props ) => {
-            return <Loading />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                showExitBtn={false}
-                className={'dims_loading'}
-            >
-                {card_states['loading'].component(props)}
-            </AppCard>
-        }
-    },
-    race_info : {
-        component : ( props ) => {
-            return <RaceInfo
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_race_info'}
-            >
-                {card_states['race_info'].component(props)}
-            </AppCard>
-        }
-    },
-    class_info : {
-        component : ( props ) => {
-            return <ClassInfo
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_class_info'}
-            >
-                {card_states['class_info'].component(props)}
-            </AppCard>
-        }
-    },
-    alignment_info : {
-        component : ( props ) => {
-            return <AlignmentInfo
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_alignment_info'}
-            >
-                {card_states['alignment_info'].component(props)}
-            </AppCard>
-        }
-    },
-    ability_info : {
-        component : ( props ) => {
-            return <AbilityInfo
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_ability_info'}
-            >
-                {card_states['ability_info'].component(props)}
-            </AppCard>
-        }
-    },
-    roll_info : {
-        component : ( props ) => {
-            return <RollInfo
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_roll_info'}
-            >
-                {card_states['roll_info'].component(props)}
-            </AppCard>
-        }
-    },
-    inventory : {
-        component : ( props ) => {
-            return <Inventory
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_inventory'}
-            >
-                {card_states['inventory'].component(props)}
-            </AppCard>
-        }
-    },
-    notes : {
-        component : ( props ) => {
-            return <Notes
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_notes'}
-            >
-                {card_states['notes'].component(props)}
-            </AppCard>
-        }
-    },
-    bkg_story : {
-        component : ( props ) => {
-            return <Background
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_bkg'}
-            >
-                {card_states['bkg_story'].component(props)}
-            </AppCard>
-        }
-    },
-    spells : {
-        component : ( props ) => {
-            return <Spellbook
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_spells'}
-            >
-                {card_states['spells'].component(props)}
-            </AppCard>
-        }
-    },
-    class_quest : {
-        component : ( props ) => {
-            return <ClassQuest
-                {...props}
-            />
-        },
-        card : ( props ) => {
-            return <AppCard
-                {...props}
-                className={'dims_class_quest'}
-            >
-                {card_states['class_quest'].component(props)}
-            </AppCard>
-        }
-    },
-}
-
-export const panel_states = {
-    hidden : {
-        component : ( props ) => {
-            return <Fragment />
-        },
-    },
-    loading : {
-        component : ( props ) => {
-            return <Loading />
-        },
-    },
-    enter : {
-        component : ( props ) => {
-            return <EnterForm
-                {...props}
-            />
-        },
-    },
-    new_player : {
-        component : ( props ) => {
-            return <CreatePlayer
-                {...props}
-            />
-        },
-    },
-    character : {
-        component : ( props ) => {
-            return <CharacterInfo
-                {...props}
-            />
-        },
-    }
-}
+import { Inventory } from "../Components/Panels/Inventory";
+import { Background } from "../Components/Panels/Background";
+import { Spellbook } from "../Components/Panels/Spellbook";
+import { ClassesInfo } from "../Components/Panels/ClassesInfo";
+import { RacesInfo } from "../Components/Panels/RacesInfo";
+import { AlignmentsInfo } from "../Components/Panels/AlignmentsInfo";
+import { AbilitiesInfo } from "../Components/Panels/AbilitiesInfo";
+import { Notebook } from "../Components/Panels/Notebook";
+import { RollInfo } from "../Components/Panels/RollInfo";
+import { TradeItems } from "../Components/Panels/TradeItems";
+import { Quests } from "../Components/Panels/Quests";
 
 export const skills = [
     // 0
-    {name: 'Athletics', id: 0},
-    {name: 'Acrobatics', id: 1},
-    {name: 'Stealth', id: 2},
-    {name: 'Sleight of Hand', id: 3},
-    {name: 'Arcana', id: 4},
+    { name : 'Athletics', id : 0 },
+    { name : 'Acrobatics', id : 1 },
+    { name : 'Stealth', id : 2 },
+    { name : 'Sleight of Hand', id : 3 },
+    { name : 'Arcana', id : 4 },
     
     // 5
-    {name: 'History', id: 5},
-    {name: 'Research', id: 6},
-    {name: 'Nature', id: 7},
-    {name: 'Religion', id: 8},
-    {name: 'Animal Handling', id: 9},
+    { name : 'History', id : 5 },
+    { name : 'Research', id : 6 },
+    { name : 'Nature', id : 7 },
+    { name : 'Religion', id : 8 },
+    { name : 'Animal Handling', id : 9 },
     
     // 10
-    {name: 'Perception', id: 10},
-    {name: 'Insight', id: 11},
-    {name: 'Medicine', id: 12},
-    {name: 'Survival Skills', id: 13},
-    {name: 'Deceit', id: 14},
+    { name : 'Perception', id : 10 },
+    { name : 'Insight', id : 11 },
+    { name : 'Medicine', id : 12 },
+    { name : 'Survival Skills', id : 13 },
+    { name : 'Deceit', id : 14 },
     
     // 15
-    {name: 'Intimidation', id: 15},
-    {name: 'Performance', id: 16},
-    {name: 'Persuasion', id: 17},
-    {name: 'Toughness', id: 18},
-    {name: 'Lung Capacity', id: 19},
+    { name : 'Intimidation', id : 15 },
+    { name : 'Performance', id : 16 },
+    { name : 'Persuasion', id : 17 },
+    { name : 'Toughness', id : 18 },
+    { name : 'Lung Capacity', id : 19 },
     
     // 20
-    {name: 'Poison Resistance', id: 20},
+    { name : 'Poison Resistance', id : 20 },
 ]
 
 export const abilities = [
@@ -805,5 +585,84 @@ export const classes = [
         },
         quest : 'Evangelize the village goblins into the light, by convincing them.'
     },
-    
+
 ]
+
+const panels = [
+    {
+        id : 0,
+        name : 'Wiki - Races',
+        panel : ( props ) => <RacesInfo {...props} />
+    },
+    {
+        id : 1,
+        name : 'Wiki - Classes',
+        panel : ( props ) => <ClassesInfo {...props} />
+    },
+    {
+        id : 2,
+        name : 'Wiki - Alignments',
+        panel : ( props ) => <AlignmentsInfo {...props} />
+    },
+    {
+        id : 3,
+        name : 'Player - Character',
+        panel : ( props ) => <CharacterInfo {...props} />
+    },
+    {
+        id : 4,
+        name : 'Player - Inventory',
+        panel : ( props ) => <Inventory {...props} />
+    },
+    {
+        id : 5,
+        name : 'Player - Spellbook',
+        panel : ( props ) => <Spellbook {...props} />
+    },
+    {
+        id : 6,
+        name : 'Wiki - Abilities',
+        panel : ( props ) => <AbilitiesInfo {...props} />
+    },
+    {
+        id : 7,
+        name : 'Player - Ability Checks',
+        panel : ( props ) => <RollInfo {...props} />
+    },
+    {
+        id : 8,
+        name : 'Player - Background',
+        panel : ( props ) => <Background {...props} />
+    },
+    {
+        id : 9,
+        name : 'Player - Notebook',
+        panel : ( props ) => <Notebook {...props} />
+    },
+    {
+        id : 10,
+        name : 'Player - Quests',
+        panel : ( props ) => <Quests {...props} />
+    },
+    {
+        id : 11,
+        name : 'Player - Trade',
+        panel : ( props ) => <TradeItems {...props} />
+    },
+]
+
+export function getPanels( parent_id, playerExists ) {
+    if ( playerExists ) {
+        return panels
+    }
+    
+    if ( parent_id === 1 ) {
+        return panels.filter(item => item.id === 3)
+    }
+    
+    return panels.filter(item => item.name.includes('Wiki'))
+}
+
+export function getPanel( panel_id, props ) {
+    return panels.filter(item => item.id === panel_id)[0]?.panel(props)
+}

@@ -1,27 +1,5 @@
 @import "variables";
 
-//.exit-btn-wrapper {
-//  width: 0;
-//  height: 0;
-//  z-index: 2;
-
-  .exit-btn {
-    position: absolute;
-    background-color: #d93619;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px !important;
-    height: 20px !important;
-    border-radius: 5px;
-    font-size: 1.05em;
-    cursor: pointer;
-    //transform: translate(10px, 10px);
-      z-index: 2;
-  }
-//}
-
 .gem-socket {
   display: flex;
   justify-content: flex-end;
@@ -90,9 +68,28 @@
   }
 }
 
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
 .load-container {
   width: 75px;
   height: 75px;
+
+  button & {
+    width: 30px;
+    height: 30px;
+    > .circle {
+      border-width: 5px;
+      border-bottom-color: white;
+    }
+  }
 
   > .circle {
     position: absolute;
