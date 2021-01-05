@@ -651,10 +651,13 @@ const panels = [
     },
 ]
 
-export function getPanels( parent_id, playerExists ) {
+export function getPanels( noPlayer ) {
+    if (noPlayer) {
+        return panels.filter(item => item.name.includes('Wiki'))
+    }
     return panels
 }
 
-export function getPanel( panel_id, props ) {
-    return panels.filter(item => item.id === panel_id)[0]?.panel(props)
+export function getPanel( panel_id, player_index, props ) {
+    return panels.filter(item => item.id === panel_id)[0]?.panel({ ...props, player_index })
 }

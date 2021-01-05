@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import { ItemCard } from "../Cards/ItemCard";
 
-export function Inventory( { player_inventory } ) {
+export function Inventory( { player_data, player_index } ) {
     return (
         <Fragment>
-            {player_inventory.length === 0 ?
+            {player_data[player_index].player_items.length === 0 ?
                 <ItemCard
                     data={{name : 'Nothing', quantity: 0, data: ''}}
                 />
-                : player_inventory.map(( item, i ) => {
+                : player_data[player_index].player_items.map(( item, i ) => {
                     return <ItemCard key={i} data={item} />
                 })}
         </Fragment>

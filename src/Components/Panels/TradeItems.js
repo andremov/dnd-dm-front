@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { TradeItemCard } from "../Cards/TradeItemCard";
 import { doTrade } from "../../Services/api";
 
-export function TradeItems( { player_id, other_players, player_inventory, setPlayerInventory } ) {
+export function TradeItems( { player_data, player_index } ) {
     const [ selectedPlayer, selectPlayer ] = useState(-1)
     const [ progress, setProgress ] = useState(false)
     const [ hasChanges, setHasChanges ] = useState(false)
-    const [ trade_inventory, setTradeInventory ] = useState(player_inventory)
+    const [ trade_inventory, setTradeInventory ] = useState(player_data[player_index].player_items)
     
     function changeAmount( index, value ) {
         let ti = JSON.parse(JSON.stringify(trade_inventory));
@@ -31,8 +31,7 @@ export function TradeItems( { player_id, other_players, player_inventory, setPla
             delete item.__v
         }
         
-        doTrade({ target_player : selectedPlayer, trade_data : ti, origin_player : player_id }).then(r => {
-            setPlayerInventory(r)
+        doTrade({ target_player : selectedPlayer, trade_data : ti, origin_player : player_data[player_index].player_data._id }).then(r => {
             setTradeInventory(r)
             setProgress(false)
             selectPlayer(-1)
@@ -47,9 +46,9 @@ export function TradeItems( { player_id, other_players, player_inventory, setPla
                     Select player...
                 </option>
                 
-                {other_players.map(( item, i ) => {
-                    return <option key={i} value={item._id}>
-                        {item.name + ' ' + item.family}
+                {player_data.map(( item, i ) => {
+                    return <option key={i} value={item.player_data._id}>
+                        {item.player_data.name + ' ' + item.player_data.family}
                     </option>
                 })}
             
@@ -59,7 +58,7 @@ export function TradeItems( { player_id, other_players, player_inventory, setPla
                 <button
                     children={'Update'}
                     className={'secondary'}
-                    onClick={() => setTradeInventory(player_inventory)}
+                    onClick={() => setTradeInventory(player_data[player_index].player_items)}
                 />
                 
                 <button

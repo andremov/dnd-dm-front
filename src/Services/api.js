@@ -60,6 +60,9 @@ export function doTrade( trade_data ) {
 
 export function fetchAllData() {
     return API.get('/players/omega/').then(r => {
+        for ( let i = 0; i < r.data.length; i++ ) {
+            r.data[i].player_data.stats = JSON.parse(r.data[i].player_data.stats)
+        }
         return r.data;
     })
 }

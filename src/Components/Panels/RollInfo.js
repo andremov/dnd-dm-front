@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { abilities, races, skills } from "../../Utils/Data";
 
-export function RollInfo( { player_data } ) {
+export function RollInfo( { player_data, player_index } ) {
     const [ ability, setAbility ] = useState(-1)
     const [ skill, setSkill ] = useState(-1)
     
@@ -10,18 +10,18 @@ export function RollInfo( { player_data } ) {
     
     let ab_mod = 0;
     if ( ability !== -1 ) {
-        ab_mod = (player_data.stats[ability] - 10) / 2
+        ab_mod = (player_data[player_index].player_data.stats[ability] - 10) / 2
     }
     
     let rac_ab_mod = 0;
     if ( ability !== -1 ) {
-        let ab_mod = races[player_data.race].ability_bonus.filter(item => item.id === ability)[0]?.bonus / 2;
+        let ab_mod = races[player_data[player_index].player_data.race].ability_bonus.filter(item => item.id === ability)[0]?.bonus / 2;
         rac_ab_mod = ab_mod ? ab_mod : rac_ab_mod;
     }
     
     let rac_sk_mod = 0;
     if ( skill !== -1 ) {
-        let sk_mod = races[player_data.race].skill_bonus.filter(item => item.id === skill)[0]?.bonus;
+        let sk_mod = races[player_data[player_index].player_data.race].skill_bonus.filter(item => item.id === skill)[0]?.bonus;
         rac_sk_mod = sk_mod ? sk_mod : rac_sk_mod;
     }
     
