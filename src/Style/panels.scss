@@ -4,6 +4,19 @@
   width: 100%;
   height: 100%;
 
+  > :first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > h1 {
+      flex: 2;
+    }
+    > div {
+      flex: 1
+    }
+  }
+
   h2 {
     margin-top: 20px;
   }

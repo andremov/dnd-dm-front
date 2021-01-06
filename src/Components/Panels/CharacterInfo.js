@@ -21,8 +21,20 @@ export function CharacterInfo( { player_data, player_index } ) {
     
     return (
         <div className={'char-info'}>
-            
-            <h1>{player_data[player_index].player_data.name + ' ' + player_data[player_index].player_data.family}</h1>
+            <div>
+                <h1>
+                    {player_data[player_index].player_data.name + ' ' + player_data[player_index].player_data.family}
+                </h1>
+                <Gem
+                    color={'red'}
+                    text={'Level ' + player_data[player_index].player_data.level}
+                    title={'Level'}
+                    type={2}
+                    side={'right'}
+                    blend={false}
+                    shadow={true}
+                />
+            </div>
             
             <div className={'section basic'}>
                 
@@ -77,18 +89,6 @@ export function CharacterInfo( { player_data, player_index } ) {
             
             <div className={'section basic'}>
                 <h2>Basic Info</h2>
-                
-                <div className={'one-gem'}>
-                    <Gem
-                        color={'red'}
-                        text={'Level ' + player_data[player_index].player_data.level}
-                        title={'Level'}
-                        type={2}
-                        side={'right'}
-                        blend={false}
-                        shadow={true}
-                    />
-                </div>
                 
                 <div className={'two-gems'}>
                     <Gem
