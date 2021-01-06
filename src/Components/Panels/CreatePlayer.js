@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { getAlignments, getClass, getClasses, getRace, getRaces } from "../../Utils/Data";
+import { getAbilities, getAlignments, getClass, getClasses, getRace, getRaces } from "../../Utils/Data";
 import { RollDie, validCharacter } from "../../Utils/Functions";
 import { createCharacter } from "../../Services/api";
 
@@ -48,8 +48,8 @@ export class CreatePlayer extends Component {
         
         if ( e.target.name === 'race' && e.target.value !== '-1' ) {
             let r = e.target.value
-            d.age = Math.min(Math.max(this.state.formData.age, races[r].age.min), races[r].age.max)
-            d.height = Math.min(Math.max(this.state.formData.height, races[r].height.min), races[r].height.max)
+            d.age = Math.min(Math.max(this.state.formData.age, getRace(r).age.min), getRace(r).age.max)
+            d.height = Math.min(Math.max(this.state.formData.height, getRace(r).height.min), getRace(r).height.max)
         }
         
         this.wrapFormData(d)
@@ -353,7 +353,7 @@ function AbilitySection( props ) {
             </div> : <Fragment />
         }
         <div className={'ability-list'}>
-            {abilities.map(( item, i ) => {
+            {getAbilities().map(( item, i ) => {
                 return <button
                     className={'secondary ability-display' + (formData.stats[i] !== 0 ? (swapStats[0] === i || swapStats[1] === i ? ' pending' : ' success') : '')}
                     title={rolledStats === 6 ? 'Swap ' + item.name : 'Assign to ' + item.name}
@@ -413,10 +413,10 @@ function validSection1( formData ) {
         formData.alignment !== -1 &&
         formData.race !== -1 &&
         formData.char_class !== -1 &&
-        formData.age <= races[formData.race].age.max &&
-        formData.age >= races[formData.race].age.min &&
-        formData.height <= races[formData.race].height.max &&
-        formData.height >= races[formData.race].height.min
+        formData.age <= getRaces(formData.race).age.max &&
+        formData.age >= getRaces(formData.race).age.min &&
+        formData.height <= getRaces(formData.race).height.max &&
+        formData.height >= getRaces(formData.race).height.min
     )
 }
 
