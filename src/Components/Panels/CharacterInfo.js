@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { abilities, alignments, classes, races } from "../../Utils/Data";
 import { Gem } from "../Gem";
+import { Loading } from "../Loading";
+import { modifyPlayer } from "../../Services/api";
 
 export function CharacterInfo( { player_data, player_index } ) {
+    const [ mod, setMod ] = useState(false)
+    
+    useEffect(() => {
+        setMod(false)
+    }, [ player_index ])
+    
+    if ( mod ) {
+        return <ModifyCharacter
+            data={player_data[player_index].player_data}
+            callback={() => setMod(false)}
+        />
+    }
+    
     
     return (
         <div className={'char-info'}>
@@ -194,7 +209,145 @@ export function CharacterInfo( { player_data, player_index } ) {
                 </div>
             </div>
             
+            <div>
+                <button
+                    className={'primary'}
+                    children={'Modify'}
+                    onClick={() => setMod(true)}
+                />
+            </div>
         </div>
     );
 }
 
+const accepted = {
+    'armor_class' : { name : 'Armor Class', type : 'number' },
+    // '_id',
+    'level' : { name : 'Level', type : 'number' },
+    'attack_dice_sides' : { name : 'Attack Dice Sides', type : 'number' },
+    'attack_dice_number' : { name : 'Attack Dice Number', type : 'number' },
+    // 'name' : {name:'Name'},
+    // 'family' : {name:'Family'},
+    // 'codename',
+    'stats' : { name : 'Stats' },
+    // 'alignment' : {name:'Alignment'},
+    // 'race' : {name:'Race'},
+    // 'char_class' : {name:'Class'},
+    'height' : { name : 'Height', type : 'number' },
+    'age' : { name : 'Age', type : 'number' },
+    // 'background',
+    'hit_points' : { name : 'Hit points', type : 'number' },
+    'max_hit_points' : { name : 'Max hit points', type : 'number' },
+    // '__v'
+}
+
+function ModifyCharacter( { data, callback } ) {
+    const [ charData, setCharData ] = useState(data);
+    const [ progress, setProgress ] = useState(false)
+    
+    function handleChange( e ) {
+        setCharData({
+            ...charData,
+            [e.target.name] : e.target.value
+        })
+    }
+    
+    function sendChanges() {
+        setProgress(true);
+        modifyPlayer(data._id, { ...charData, stats : JSON.stringify(charData.stats) }).then(r => {
+            setProgress(false);
+            callback()
+        })
+    }
+    
+    return <div className={'edit-char-info'}>
+        
+        {
+            Object.keys(charData).map(( item, i ) => {
+                return <Fragment key={i}>
+                    {
+                        accepted[item] ?
+                            item === 'stats' ?
+                                <ModifyStats
+                                    data={charData[item]}
+                                    editCallback={handleChange}
+                                /> :
+                                <ModifyField
+                                    data={charData[item]}
+                                    name={item}
+                                    label={accepted[item].name}
+                                    type={accepted[item].type}
+                                    editCallback={handleChange}
+                                /> :
+                            <> </>
+                    }
+                </Fragment>
+            })
+        }
+        
+        <div>
+            <button
+                children={'Cancel'}
+                disabled={progress}
+                className={'secondary'}
+                onClick={callback}
+            />
+            <button
+                children={progress ? <Loading /> : 'Modify'}
+                disabled={progress}
+                className={'primary'}
+                onClick={sendChanges}
+            />
+        </div>
+    </div>
+}
+
+function ModifyField( { data, name, label, editCallback, type } ) {
+    return <div className={'edit-char-field'}>
+        <div>
+            {label}
+        </div>
+        <input
+            value={data}
+            name={name}
+            onChange={editCallback}
+            type={type}
+        />
+    </div>
+}
+
+function ModifyStats( { data, editCallback } ) {
+    
+    function editWrapper( e, i ) {
+        let d = data;
+        d[i] = parseInt(e.target.value);
+        editCallback({ ...e, target : { ...e.target, value : d } })
+    }
+    
+    return <div className={'edit-char-stats'}>
+        {
+            data.map(( item, i ) => {
+                return <ModifySingleStat
+                    key={i}
+                    data={item}
+                    index={i}
+                    editCallback={( e ) => editWrapper(e, i)}
+                />
+            })
+        }
+    </div>
+}
+
+function ModifySingleStat( { data, index, editCallback } ) {
+    return <div className={'edit-stat'}>
+        <div>
+            {abilities[index].name}
+        </div>
+        <input
+            value={data}
+            name={'stats'}
+            onChange={editCallback}
+            type={'number'}
+        />
+    </div>
+}

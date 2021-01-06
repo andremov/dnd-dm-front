@@ -45,11 +45,11 @@ export function modifyNote( id, data ) {
     })
 }
 
-export function fetchOtherPlayers() {
-    return API.get('/players/others/').then(r => {
-        return r.data;
-    })
-}
+// export function fetchOtherPlayers() {
+//     return API.get('/players/others/').then(r => {
+//         return r.data;
+//     })
+// }
 
 export function doTrade( trade_data ) {
     return API.post('/items/trade', trade_data).then(r => {
@@ -85,7 +85,6 @@ export function deleteItem( item_id ) {
     })
 }
 
-
 export function addSpell( item_data ) {
     return API.post('/spells', item_data).then(r => {
         return r.data;
@@ -100,6 +99,12 @@ export function modifySpell( item_id, item_data ) {
 
 export function deleteSpell( item_id ) {
     return API.delete('/spells/' + item_id).then(r => {
+        return r.data;
+    })
+}
+
+export function modifyPlayer( player_id, player_data ) {
+    return API.patch('/players/'+player_id, player_data).then(r => {
         return r.data;
     })
 }

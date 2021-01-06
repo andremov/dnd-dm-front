@@ -21,6 +21,12 @@
     display: flex;
     justify-content: space-evenly;
   }
+
+  > :last-child {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .ability-check-info {
