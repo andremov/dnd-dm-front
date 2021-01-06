@@ -4,7 +4,7 @@ import { modifyNote } from "../../Services/api";
 import { Loading } from "../Loading";
 
 export function NoteCard( { data } ) {
-    const [ textAreaHeight, setTextAreaHeight ] = useState(50)
+    const [ textAreaHeight, setTextAreaHeight ] = useState(textHeight(data.data))
     const [ opened, setOpen ] = useState(false);
     const [ progress, setProgress ] = useState(false);
     const [ notes, setNotes ] = useState(data.data)
