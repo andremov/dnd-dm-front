@@ -108,3 +108,21 @@ export function modifyPlayer( player_id, player_data ) {
         return r.data;
     })
 }
+
+export function addQuest(quest_data) {
+    return API.post('/quests/', quest_data).then(r => {
+        return r.data;
+    })
+}
+
+export function modifyQuest(quest_id, quest_data) {
+    return API.patch('/quests/'+quest_id, quest_data).then(r => {
+        return r.data;
+    })
+}
+
+export function deleteQuest(quest_id) {
+    return API.delete('/quests/'+quest_id).then(r => {
+        return r.data;
+    })
+}
