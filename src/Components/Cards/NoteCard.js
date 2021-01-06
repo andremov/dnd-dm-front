@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { textHeight, validCharacter } from "../../Utils/Functions";
 import { modifyNote } from "../../Services/api";
 import { Loading } from "../Loading";
@@ -9,6 +9,14 @@ export function NoteCard( { data } ) {
     const [ progress, setProgress ] = useState(false);
     const [ notes, setNotes ] = useState(data.data)
     const [ hasChanges, setHasChanges ] = useState(false)
+    
+    useEffect(() => {
+        setNotes(data.data)
+        setTextAreaHeight(textHeight(data.data))
+        setOpen(false)
+        setHasChanges(false)
+        setProgress(false)
+    }, [data._id])
     
     function openCallback() {
         setOpen(!opened)
