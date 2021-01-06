@@ -1,0 +1,38 @@
+
+.new-note-card, .new-item-card {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  display: flex;
+  border-radius: 5px;
+  background-color: gray;
+  margin-bottom: 10px;
+
+}
+
+.new-note-card {
+}
+
+.new-item-card {
+  flex-direction: column;
+
+  > textarea {
+    min-height: var(--textAreaHeight);
+    height: var(--textAreaHeight);
+  }
+
+  > button {
+    width: 50%;
+    align-self: center;
+  }
+  > div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+
+.erasing {
+    color: gray;
+    background-color: gray;
+}

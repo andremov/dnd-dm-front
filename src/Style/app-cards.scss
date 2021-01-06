@@ -51,7 +51,7 @@
 .spell-card, .inventory-item-card, .trade-item-card {
   display: flex;
   flex-direction: column;
-  min-height: calc(var(--itemDataHeight) + 35px);
+  min-height: calc(var(--itemDataHeight) + 95px);
   font-size: 16px;
   line-height: 1.4;
   border-radius: 10px;
@@ -81,7 +81,12 @@
     justify-content: space-evenly;
     align-items: center;
     min-height: 60px;
+  }
+}
 
+.trade-item-card {
+
+  > :nth-child(3) {
     > button {
       width: 50px;
       min-width: 50px;
@@ -91,10 +96,6 @@
       font-size: 1.5em;
     }
   }
-}
-
-.trade-item-card {
-  min-height: calc(var(--itemDataHeight) + 95px);
 }
 
 .race-card {
@@ -167,7 +168,6 @@
   }
 
   > textarea {
-    resize: none;
     max-width: 100%;
     min-height: var(--textAreaHeight);
     overflow: hidden;
@@ -178,15 +178,6 @@
     width: 200px;
     align-self: center;
   }
-}
-
-.new-note-card {
-  width: 100%;
-  padding: 5px;
-  box-sizing: border-box;
-  display: flex;
-  border-radius: 5px;
-  background-color: $main-color-dark;
 }
 
 .ability-card {

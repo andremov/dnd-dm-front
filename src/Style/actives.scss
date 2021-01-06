@@ -12,7 +12,7 @@ button {
   transition: 0.2s;
   font-size: 1.5em;
   font-weight: bold;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 
   &:disabled {
     background: gray !important;
@@ -26,6 +26,7 @@ button {
   &.primary {
     background: linear-gradient(30deg, $main-color-light, $main-color-dark) 5% 20%;
     background-size: 120% 120%;
+    border-color: white;
     color: white;
   }
 
@@ -72,7 +73,7 @@ input, select, textarea {
   background-color: #ddd;
   transition: 0.2s;
   font-size: 1.05em;
-  margin: 2px;
+  margin: 2px 0;
 
   &:focus {
     border-color: $main-color;
@@ -94,6 +95,7 @@ input[type='range'] {
 
 textarea {
   font-size: 16px !important;
+  resize: none;
 }
 
 .range-input {

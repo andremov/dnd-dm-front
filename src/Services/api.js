@@ -66,3 +66,21 @@ export function fetchAllData() {
         return r.data;
     })
 }
+
+export function addItem( item_data ) {
+    return API.post('/items', item_data).then(r => {
+        return r.data;
+    })
+}
+
+export function modifyItem( item_id, item_data ) {
+    return API.patch('/items/' + item_id, item_data).then(r => {
+        return r.data;
+    })
+}
+
+export function deleteItem( item_id ) {
+    return API.delete('/items/' + item_id).then(r => {
+        return r.data;
+    })
+}

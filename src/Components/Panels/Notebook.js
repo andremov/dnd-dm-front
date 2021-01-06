@@ -37,7 +37,7 @@ function NewNoteCard( { player_id } ) {
         <button
             children={progress? <Loading /> : 'Create'}
             disabled={title.length === 0 || progress}
-            className={'secondary'}
+            className={'primary'}
             onClick={sendCreateNote}
         />
     </div>
