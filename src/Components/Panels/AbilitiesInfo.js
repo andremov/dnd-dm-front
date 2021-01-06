@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { abilities } from "../../Utils/Data";
+import { getAbilities } from "../../Utils/Data";
 import { AbilityCard } from "../Cards/AbilityCard";
 
 export function AbilitiesInfo() {
@@ -7,7 +7,7 @@ export function AbilitiesInfo() {
     return (
         <Fragment>
             {
-                abilities.map( (item,i) => {
+                getAbilities().map( (item,i) => {
                     return <AbilityCard key={i} ability_data={item} />
                 } )
             }

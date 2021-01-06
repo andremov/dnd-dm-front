@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { abilities, races, skills } from "../../Utils/Data";
+import { getAbilities, getAbilitySkills, getRace, getSkillAbility, getSkills } from "../../Utils/Data";
 
 export function RollInfo( { player_data, player_index } ) {
     const [ ability, setAbility ] = useState(-1)
     const [ skill, setSkill ] = useState(-1)
     
-    let filtered_skills = ability === -1 ? skills : skills.filter(( item, i ) => abilities[ability].skills.includes(i))
+    let filtered_skills = ability === -1 ? getSkills() : getAbilitySkills(ability)
     
     
     let ab_mod = 0;
@@ -15,13 +15,13 @@ export function RollInfo( { player_data, player_index } ) {
     
     let rac_ab_mod = 0;
     if ( ability !== -1 ) {
-        let ab_mod = races[player_data[player_index].player_data.race].ability_bonus.filter(item => item.id === ability)[0]?.bonus / 2;
+        let ab_mod = getRace(player_data[player_index].player_data.race).ability_bonus.filter(item => item.id === ability)[0]?.bonus / 2;
         rac_ab_mod = ab_mod ? ab_mod : rac_ab_mod;
     }
     
     let rac_sk_mod = 0;
     if ( skill !== -1 ) {
-        let sk_mod = races[player_data[player_index].player_data.race].skill_bonus.filter(item => item.id === skill)[0]?.bonus;
+        let sk_mod = getRace(player_data[player_index].player_data.race).skill_bonus.filter(item => item.id === skill)[0]?.bonus;
         rac_sk_mod = sk_mod ? sk_mod : rac_sk_mod;
     }
     
@@ -56,7 +56,7 @@ export function RollInfo( { player_data, player_index } ) {
             return;
         }
         
-        setAbility(abilities.filter(item => item.skills.includes(parseInt(value)))[0].id)
+        setAbility(getSkillAbility(parseInt(value)))
     }
     
     
@@ -67,7 +67,7 @@ export function RollInfo( { player_data, player_index } ) {
                 <option value={-1}>
                     Ability
                 </option>
-                {abilities.map(( item, i ) => {
+                {getAbilities().map(( item, i ) => {
                     return <option value={item.id} key={i}>
                         {item.name}
                     </option>

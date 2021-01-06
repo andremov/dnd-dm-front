@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { alignments } from "../../Utils/Data";
+import { getAlignment } from "../../Utils/Data";
 import { Gem } from "../Gem";
 
 export function ClassCard( { class_data } ) {
@@ -33,7 +33,7 @@ export function ClassCard( { class_data } ) {
                 <span style={{ fontWeight : 'bold' }}>
                     Base Alignment:{' '}
                 </span>
-                {alignments[alignment].name}
+                {getAlignment(alignment).name}
             </div>
         </div>
         

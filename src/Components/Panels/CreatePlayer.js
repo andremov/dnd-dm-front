@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { abilities, alignments, classes, races } from "../../Utils/Data";
+import { getAlignments, getClass, getClasses, getRace, getRaces } from "../../Utils/Data";
 import { RollDie, validCharacter } from "../../Utils/Functions";
 import { createCharacter } from "../../Services/api";
 
@@ -110,7 +110,13 @@ export class CreatePlayer extends Component {
     }
     
     doSend = () => {
-        createCharacter(this.state.formData).then(r => {
+        createCharacter({
+            ...this.state.formData,
+            stats : JSON.stringify(this.state.formData.stats),
+            level : 1,
+            hit_points : getClass(this.state.formData.char_class).hit_dice,
+            max_hit_points : getClass(this.state.formData.char_class).hit_dice
+        }).then(r => {
             console.log(r.message)
             this.props.endCallback()
         })
@@ -229,8 +235,8 @@ function BasicSection( props ) {
             >
                 <option value={-1}>Race</option>
                 {
-                    races.map(( item, i ) => {
-                        return <option key={i} value={i}>
+                    getRaces().map(( item, i ) => {
+                        return <option key={i} value={item.id}>
                             {item.name}
                         </option>
                     })
@@ -244,8 +250,8 @@ function BasicSection( props ) {
             >
                 <option value={-1}>Class</option>
                 {
-                    classes.map(( item, i ) => {
-                        return <option key={i} value={i}>
+                    getClasses().map(( item, i ) => {
+                        return <option key={i} value={item.id}>
                             {item.name}
                         </option>
                     })
@@ -260,8 +266,8 @@ function BasicSection( props ) {
         >
             <option value={-1}>Alignment</option>
             {
-                alignments.map(( item, i ) => {
-                    return <option key={i} value={i}>
+                getAlignments().map(( item, i ) => {
+                    return <option key={i} value={item.id}>
                         {item.name}
                     </option>
                 })
@@ -284,8 +290,8 @@ function BasicSection( props ) {
                 type={'range'}
                 name={'height'}
                 disabled={formData.race === -1}
-                min={races[formData.race]?.height.min}
-                max={races[formData.race]?.height.max}
+                min={getRace(formData.race)?.height.min}
+                max={getRace(formData.race)?.height.max}
                 value={formData.height}
                 onChange={handleChange}
             />
@@ -307,8 +313,8 @@ function BasicSection( props ) {
                 type={'range'}
                 name={'age'}
                 disabled={formData.race === -1}
-                min={races[formData.race]?.age.min}
-                max={races[formData.race]?.age.max}
+                min={getRace(formData.race)?.age.min}
+                max={getRace(formData.race)?.age.max}
                 value={formData.age}
                 onChange={handleChange}
             />

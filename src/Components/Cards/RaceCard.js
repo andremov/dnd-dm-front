@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { abilities, skills } from "../../Utils/Data";
+import { getAbility, getSkill } from "../../Utils/Data";
 import { Gem } from "../Gem";
 
 export function RaceCard( { race_data } ) {
@@ -25,7 +25,7 @@ export function RaceCard( { race_data } ) {
                         </div>
                         {ability_bonus.map(( item, i ) => {
                             return <div key={i}>
-                                {abilities[item.id].name}: +{item.bonus}
+                                {getAbility(item.id).name}: +{item.bonus}
                             </div>
                         })}
                     </Fragment> : <Fragment />
@@ -39,7 +39,7 @@ export function RaceCard( { race_data } ) {
                         </div>
                         {skill_bonus.map(( item, i ) => {
                             return <div key={i}>
-                                {skills[item.id].name}: +{item.bonus}
+                                {getSkill(item.id).name}: +{item.bonus}
                             </div>
                         })}
                     </Fragment> : <Fragment />
