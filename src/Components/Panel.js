@@ -12,7 +12,10 @@ export function Panel( props ) {
     }
     
     function handleChangePlayer( e ) {
-        setPlayer(e.target.value)
+        if (e.target.value === '-1') {
+            setPanel(-1)
+        }
+        setPlayer(parseInt(e.target.value))
     }
     
     return (
