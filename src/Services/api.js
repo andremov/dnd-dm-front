@@ -84,3 +84,22 @@ export function deleteItem( item_id ) {
         return r.data;
     })
 }
+
+
+export function addSpell( item_data ) {
+    return API.post('/spells', item_data).then(r => {
+        return r.data;
+    })
+}
+
+export function modifySpell( item_id, item_data ) {
+    return API.patch('/spells/' + item_id, item_data).then(r => {
+        return r.data;
+    })
+}
+
+export function deleteSpell( item_id ) {
+    return API.delete('/spells/' + item_id).then(r => {
+        return r.data;
+    })
+}

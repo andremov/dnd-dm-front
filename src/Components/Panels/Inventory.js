@@ -10,19 +10,17 @@ export function Inventory( { player_data, player_index } ) {
             <NewItemCard
                 player_id={player_data[player_index].player_data._id}
             />
-            {player_data[player_index].player_items.length === 0 ?
-                <ItemCard
-                    data={{ name : 'Nothing', quantity : 0, data : '' }}
-                />
-                : player_data[player_index].player_items.map(( item, i ) => {
+            {
+                player_data[player_index].player_items.map(( item, i ) => {
                     return <ItemCard key={i} data={item} />
-                })}
+                })
+            }
         </Fragment>
     );
 }
 
 function NewItemCard( { player_id } ) {
-    const [ item_data, setData ] = useState({name : '', quantity: '', data:''})
+    const [ item_data, setData ] = useState({ name : '', quantity : '', data : '' })
     const [ progress, setProgress ] = useState(false)
     const [ textAreaHeight, setTextAreaHeight ] = useState(50)
     const [ ready, setReady ] = useState(false)
@@ -50,7 +48,7 @@ function NewItemCard( { player_id } ) {
     function sendCreateItem() {
         setProgress(true)
         addItem({ ...item_data, owner : player_id }).then(r => {
-            setData({name : '', quantity: '', data:''})
+            setData({ name : '', quantity : '', data : '' })
             setReady(false)
             setProgress(false)
         })
@@ -87,7 +85,7 @@ function NewItemCard( { player_id } ) {
                 className={'secondary'}
                 onClick={() => {
                     setReady(false)
-                    setData({name : '', quantity: '', data:''})
+                    setData({ name : '', quantity : '', data : '' })
                 }}
             />
             <button

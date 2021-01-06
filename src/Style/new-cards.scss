@@ -1,5 +1,5 @@
 
-.new-note-card, .new-item-card {
+.new-note-card, .new-item-card, .new-spell-card {
   width: 100%;
   padding: 5px;
   box-sizing: border-box;
@@ -13,7 +13,7 @@
 .new-note-card {
 }
 
-.new-item-card {
+.new-item-card, .new-spell-card {
   flex-direction: column;
 
   > textarea {
